@@ -8,7 +8,6 @@ const AppTheme = ({ children }) => {
     <div>
       <ThemeProvider theme={purpleTheme}>
         <CssBaseline />
-
         {children}
       </ThemeProvider>
     </div>
