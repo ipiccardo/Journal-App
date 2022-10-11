@@ -1,41 +1,49 @@
 import React, { useMemo } from "react";
 import { Google } from "@mui/icons-material";
 import { Link as RouterLink } from "react-router-dom";
-import { Button, Grid, Link, TextField, Typography } from "@mui/material";
+import {
+  Button,
+  Grid,
+  Link,
+  TextField,
+  Typography,
+  Alert,
+} from "@mui/material";
 import AuthLayout from "../layout/AuthLayout";
-import {useForm} from '../../hooks'
-import { useDispatch } from 'react-redux'
-import { checkingAuthentication, startGoogleSignIn } from "../../store/auth";
+import { useForm } from "../../hooks";
+import { useDispatch } from "react-redux";
+import {
+  checkingAuthentication,
+  startGoogleSignIn,
+  startLoginWithEmailPassword,
+} from "../../store/auth";
 import { useSelector } from "react-redux";
 
 const LoginPage = () => {
   // sx en este caso hace referecina al style mientras que xs hace referencia al tamaño
 
-  const {status} = useSelector(state => state.auth)
+  const { status, errorMessage } = useSelector((state) => state.auth);
 
+  const dispatch = useDispatch();
 
-  const dispatch = useDispatch()
-  
+  const { email, password, onInputChange } = useForm({
+    email: "ivan_piccardo@hotmail.com",
+    password: "123456",
+  });
 
-const {email, password, onInputChange} = useForm({
-  email: 'ivan_piccardo@hotmail.com',
-  password: '123456'
-})
+  const isAuthenticating = useMemo(() => status === "checking", [status]);
 
-const isAuthenticating = useMemo(() => status === 'checking', [status])
+  const onSubmit = (event) => {
+    event.preventDefault();
 
+    console.log({ email, password });
+    dispatch(startLoginWithEmailPassword({ email, password }));
+  };
 
-const onSubmit = (event) => {
-  event.preventDefault();
-
-  console.log({email, password})
-  dispatch(checkingAuthentication())
-}
-
-const onGoogleSignIn = () => {
-  console.log('onGoogleSignIn')
-  dispatch(startGoogleSignIn())
-}
+  const onGoogleSignIn = () => {
+    console.log("onGoogleSignIn");
+    dispatch(startGoogleSignIn());
+  };
 
   return (
     <>
@@ -48,7 +56,7 @@ const onGoogleSignIn = () => {
                 type="email"
                 placeholder="correo@google.com"
                 fullWidth
-                name='email'
+                name="email"
                 value={email}
                 onChange={onInputChange}
               />
@@ -59,25 +67,38 @@ const onGoogleSignIn = () => {
                 type="password"
                 placeholder="contraseña"
                 fullWidth
-                name='password'
+                name="password"
                 value={password}
                 onChange={onInputChange}
               />
             </Grid>
-
+            <Grid
+              container
+              display={!!errorMessage ? "" : "none"}
+              sx={{ mt: 1 }}
+            >
+              <Grid item xs={12} sm={6}>
+                <Alert severity="error">{errorMessage}</Alert>
+              </Grid>
+            </Grid>
             <Grid container spacing={2} sx={{ mb: 2, mt: 2 }}>
               <Grid item xs={12} sm={6}>
-                <Button disabled={ isAuthenticating } type='submit' variant="contained" fullWidth>
+                <Button
+                  disabled={isAuthenticating}
+                  type="submit"
+                  variant="contained"
+                  fullWidth
+                >
                   Login
                 </Button>
               </Grid>
               <Grid item xs={12} sm={6}>
                 <Button
-                disabled={ isAuthenticating }
-                 variant="contained" 
-                 fullWidth
-                 onClick={ onGoogleSignIn }
-                 >
+                  disabled={isAuthenticating}
+                  variant="contained"
+                  fullWidth
+                  onClick={onGoogleSignIn}
+                >
                   <Google />
                   <Typography sx={{ ml: 1 }}>Google</Typography>
                 </Button>
