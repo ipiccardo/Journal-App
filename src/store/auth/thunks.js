@@ -32,29 +32,27 @@ export const startCreatingUserWithEmailPassword = ({
   return async (dispatch) => {
     dispatch(checkingCredentials());
 
-    const {ok, uid, photoURL, errorMessage} = await registerUserWithEmailPassword({
-      email,
-      password,
-      displayName,
-    });
+    const { ok, uid, photoURL, errorMessage } =
+      await registerUserWithEmailPassword({
+        email,
+        password,
+        displayName,
+      });
 
-    if (!ok) return dispatch(logout({errorMessage}))
+    if (!ok) return dispatch(logout({ errorMessage }));
 
-    dispatch(login({uid, displayName, email, photoURL}))
+    dispatch(login({ uid, displayName, email, photoURL }));
   };
 };
 
+export const startLoginWithEmailPassword = ({ email, password }) => {
+  return async (dispatch) => {
+    dispatch(checkingCredentials());
 
+    const result = await loginWithEmailPassword({ email, password });
 
-export const startLoginWithEmailPassword = ({email, password}) => {
-  return async( dispatch ) => {
-      dispatch(checkingCredentials())
-
-      const result = await loginWithEmailPassword({email, password})
-    
-      console.log(result)
-    if(!result.ok) return dispatch(logout(result))
+    console.log(result.errorMessage);
+    if (!result.ok) return dispatch(logout(result));
     dispatch(login(result));
-    }
-  
-}
+  };
+};

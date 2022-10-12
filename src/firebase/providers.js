@@ -66,7 +66,7 @@ export const registerUserWithEmailPassword = async ({
       displayName,
     };
   } catch (error) {
-    return { ok: false, errorMessage: "El usuario o la contraseña ya existe!" };
+    return { ok: false, errorMessage: "El usuario ya existe!" };
   }
 };
 
@@ -86,7 +86,7 @@ export const loginWithEmailPassword = async ({ email, password }) => {
   } catch (error) {
     console.log(error);
     return {
-        ok: false, errorMessage: error.message 
+        ok: false, errorMessage: 'El usuario o la contraseña es incorrecta'
     }
   }
 
