@@ -80,15 +80,19 @@ export const loginWithEmailPassword = async ({ email, password }) => {
     const { uid, photoURL, displayName } = resp.user;
 
     return {
-        ok: true,
-        uid, photoURL, displayName
-    }
+      ok: true,
+      uid,
+      photoURL,
+      displayName,
+    };
   } catch (error) {
-    console.log(error);
     return {
-        ok: false, errorMessage: 'El usuario o la contraseña es incorrecta'
-    }
+      ok: false,
+      errorMessage: "El usuario o la contraseña es incorrecta",
+    };
   }
-
-  // signInWithEmailAndPassword
 };
+export const logoutFirebase = async () => {
+  return await FirebaseAuth.signOut();
+};
+// signInWithEmailAndPassword
