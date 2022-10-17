@@ -57,8 +57,8 @@ export const RegisterPage = () => {
   return (
     <>
       <AuthLayout title="Login">
-        <h1>FormValid {isFormValid ? "Valido" : "Incorrecto"}</h1>
-        <form onSubmit={onSubmit}>
+        <h1>Ingrese sus datos</h1>
+        <form onSubmit={onSubmit} classname='animate__animated animate__fadeIn animate__faster'>
           <Grid container>
             <Grid item xs={12} sx={{ mt: 2 }}>
               <TextField
@@ -109,14 +109,9 @@ export const RegisterPage = () => {
               
               
               
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={12} sm={12}>
                 <Button disabled={ isCheckingAuthentication } type="submit" variant="contained" fullWidth onClick={onSubmit}>
                   Crear Cuenta
-                </Button>
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <Button variant="contained" fullWidth>
-                  <Typography sx={{ ml: 1 }}>Crear cuenta</Typography>
                 </Button>
               </Grid>
             </Grid>

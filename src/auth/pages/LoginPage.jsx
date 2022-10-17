@@ -13,7 +13,6 @@ import AuthLayout from "../layout/AuthLayout";
 import { useForm } from "../../hooks";
 import { useDispatch } from "react-redux";
 import {
-  checkingAuthentication,
   startGoogleSignIn,
   startLoginWithEmailPassword,
 } from "../../store/auth";
@@ -36,19 +35,17 @@ const LoginPage = () => {
   const onSubmit = (event) => {
     event.preventDefault();
 
-    console.log({ email, password });
     dispatch(startLoginWithEmailPassword({ email, password }));
   };
 
   const onGoogleSignIn = () => {
-    console.log("onGoogleSignIn");
     dispatch(startGoogleSignIn());
   };
 
   return (
     <>
       <AuthLayout title="Login">
-        <form onSubmit={onSubmit}>
+        <form onSubmit={onSubmit} classname='animate__animated animate__fadeIn animate__faster'>
           <Grid container>
             <Grid item xs={12} sx={{ mt: 2 }}>
               <TextField

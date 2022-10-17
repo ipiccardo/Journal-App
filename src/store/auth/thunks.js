@@ -1,6 +1,4 @@
 // ACCIONES QUE PUEDO DESPACHAR QUE TIENEN INTERNAMENTE UNA TAREA ASINCRONA
-
-import { async } from "@firebase/util";
 import {
   loginWithEmailPassword,
   logoutFirebase,
@@ -53,7 +51,6 @@ export const startLoginWithEmailPassword = ({ email, password }) => {
 
     const result = await loginWithEmailPassword({ email, password });
 
-    console.log(result.errorMessage);
     if (!result.ok) return dispatch(logout(result));
     dispatch(login(result));
   };
